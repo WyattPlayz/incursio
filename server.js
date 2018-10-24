@@ -1,19 +1,26 @@
-
+// Initalize Discord.js, The client, RichEmbed, And The Bot Prefix
 const { Client, RichEmbed } = require('discord.js');
 const Discord = require('discord.js');
 const client = new Discord.Client;
 const prefix = process.env.PREFIX
 
+// When the bot is ready,
 client.on('ready', () => {
+  // Do this.
   console.log('Bot boot successful.');
   client.user.setPresence({game: {name: 'People code!', type: 'WATCHING'}, status: 'online'});
 });
 
+//When someone sends a message
 client.on('message', msg => {
+  // Make sure they arent a bot
   if (msg.author.bot) return;
+  // Log the message
   console.log(`Message From ${msg.author.username}/${msg.author.id} On Channel ${msg.channel.name} With Content: "${msg.content}"`);
+  // Get the arguments and command
   var args = msg.content.slice(prefix.length).trim().split(/ +/g);
   var cmd = args.shift().toLowerCase()
+  // Check for a command
   if (cmd == "help") {
     console.log(`Help command execution from ${msg.author.username}/${msg.author.id}`);
     var embed = new RichEmbed()
@@ -40,9 +47,13 @@ client.on('message', msg => {
   }
 });
 
+// When someone sends a message
 client.on('message', msg => {
+  // Initalize a array of swear words.
   var SWEARS = [ "fuck", "shit", "hell", "fucking", "fuckin", "shitty", "shity", "hel", "hell", "kill", "k1ll", "sh1t" ]
+  // If the message contains one:
   if (msg.content.includes(SWEARS)) {
+    // Stop it from sending.
     var embed = new RichEmbed()
     .setTitle('Oh Nos!')
     .setFooter('Swear Detection')
